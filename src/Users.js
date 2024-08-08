@@ -10,12 +10,14 @@ const Users = () => {
   const [selectedUser, setSelectedUser] = useState({});
   const [isEdit, setIsEdit] = useState(false);
 
+  const baseUrl = process.env.REACT_APP_ENDPOINT;
+
   useEffect(() => {
     getUsers();
   }, []);
 
   const getUsers = () => {
-    Axios.get(process.env.REACT_APP_ENDPOINT + '/api/users')
+    Axios.get(baseUrl + '/api/users')
       .then((response) => {
         setUsers(response.data?.response || []);
       })
@@ -32,7 +34,7 @@ const Users = () => {
       name: data.name,
     };
 
-    Axios.post(process.env.REACT_APP_ENDPOINT + '/api/createuser', payload)
+    Axios.post(baseUrl + '/api/createuser', payload)
       .then(() => {
         getUsers();
         setSubmitted(false);
@@ -51,7 +53,7 @@ const Users = () => {
       name: data.name,
     };
 
-    Axios.post(process.env.REACT_APP_ENDPOINT + '/api/updateuser', payload)
+    Axios.post(baseUrl + '/api/updateuser', payload)
       .then(() => {
         getUsers();
         setSubmitted(false);
@@ -63,7 +65,7 @@ const Users = () => {
   };
 
   const deleteUser = (data) => {
-    Axios.post(process.env.REACT_APP_ENDPOINT + '/api/deleteuser', data)
+    Axios.post(baseUrl + '/api/deleteuser', data)
       .then(() => {
         getUsers();
       })
